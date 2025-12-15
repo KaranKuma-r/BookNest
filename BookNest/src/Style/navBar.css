@@ -3,12 +3,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1C1C1C;
+  background: linear-gradient(to right, #2b2b2b, #3c4a57, #2b2b2b);
   padding: 15px 30px;
   color: white;
-  background: linear-gradient(to right, #1C1C1C, #307583, #1C1C1C);
-  box-shadow: 0 0 14px #1C1C1C, 0 0 0px #307583, 0 0 10px #307583;
-  animation: neonBlink 1.5s infinite alternate;
+  box-shadow: 0 0 18px rgba(90, 150, 200, 0.4);
+  animation: navGlow 2s ease-in-out infinite alternate;
   position: fixed;
   top: 0;
   left: 0;
@@ -16,51 +15,63 @@
   z-index: 1000;
 }
 
-body{
-   margin-top: 70px;
+@keyframes navGlow {
+  from { box-shadow: 0 0 10px rgba(80, 140, 200, 0.25); }
+  to { box-shadow: 0 0 22px rgba(120, 200, 255, 0.45); }
 }
+
+body {
+  margin-top:73px;
+  background: #f7f5f3;
+}
+
+/* LOGO */
 .logo {
   font-size: 24px;
   font-weight: bold;
+  color: #e2e8f0;
 }
 
+/* NAV LINKS */
 .nav-links {
   list-style: none;
   display: flex;
   gap: 30px;
-  font-family: "JOST";
   margin-right: 100px;
+  font-family: "Jost";
 }
 
 .nav-links li a {
-  color: white;
+  color: #e2e8f0;
   text-decoration: none;
   font-size: 16px;
-  transition: color 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .nav-links li a:hover {
-  color: #60a5fa;
+  color: #90cdf4;
 }
 
+/* 🔍 SEARCH BOX */
 .SerachBox {
   width: 550px;
   padding: 10px 15px;
-  border: 2px solid #241E1E;
   border-radius: 10px;
   outline: none;
   font-size: 16px;
-  transition: all 0.3s ease;
-  color: rgb(247, 247, 246);
-  background: linear-gradient(to right, #1C1C1C, #145b69, #1C1C1C);
+  background: linear-gradient(to right, #2c3136, #3f5260, #2c3136);
+  color: #f2f2f2;
   border: none;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  transition: 0.3s ease;
 }
 
-.search-input:focus {
-  border-color: #5b5fef;
-  box-shadow: 0 0 5px rgba(19, 26, 227, 0.5);
+.SerachBox:focus {
+  box-shadow: 0 0 8px rgba(135, 206, 255, 0.6);
 }
+
+/* --------------------------------------------------
+    🔐 LOGIN PAGE
+-------------------------------------------------- */
 
 .login_page {
   height: 100vh;
@@ -73,197 +84,167 @@ body{
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  background: url("https://wallpapers.com/images/hd/book-on-black-screen-4k-y4z0ststv0oi0oqh.jpg")no-repeat center center/cover;
+  background: url("https://wallpapers.com/images/hd/mysterious-open-book-black-background-7d8xtcjpa2g4q43d.jpg")
+    no-repeat center center/cover;
 }
 
+/* LOGIN BOX */
 .login-box {
   position: absolute;
-  right: 15%;       
-  top: 30%; 
-  background: #2e1d1d;
+  right: 12%;         /* UPDATED MARGIN */
+  top: 20%;           /* UPDATED MARGIN */
+  width: 420px;
   padding: 25px 30px;
-  border-radius: 10px;
-  width: 500px;
-  height: 500px;
-  background: transparent;
-  border: 2px solid #37f;               
-  border-radius: 12px;
-  box-shadow:
-    0 0 8px #37f,
-    0 0 16px #37f,
-    inset 0 0 6px #37f;
-  animation: neonPulse 1.4s ease-in-out infinite alternate;
 
+  backdrop-filter: blur(14px);
+  background: rgba(32, 42, 54, 0.55);
+  border: 1px solid rgba(135, 206, 255, 0.4);
+  border-radius: 14px;
+
+  animation: glassGlow 2s infinite alternate ease-in-out;
 }
-@keyframes neonPulse {
-  from {
-    box-shadow:
-      0 0 6px #37f,
-      0 0 12px #37f,
-      0 0 24px #37f,
-      inset 0 0 4px #37f;
-    border-color: #37f;
-  }
-  to {
-    box-shadow:
-      0 0 12px #6cf,
-      0 0 28px #6cf,
-      0 0 56px #6cf,
-      inset 0 0 8px #6cf;
-    border-color: #6cf;
-  }
+
+@keyframes glassGlow {
+  0% { box-shadow: 0 0 12px rgba(135, 206, 255, 0.2); }
+  100% { box-shadow: 0 0 22px rgba(135, 206, 255, 0.4); }
 }
 
 .login-box h2 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #f1ecec;
-  font-family: "Jost";
+  color: #edf2f7;
   font-size: 26px;
-
+  margin-bottom: 20px;
+  font-family: "Jost";
 }
 
 .login-box label {
-  display: block;
+  color: #dfe7ec;
+  font-size: 18px;
   margin-bottom: 5px;
-   color: #d8cdcd;
-  font-family: "Jost",'Times New Roman', Times, serif;
-  font-size: 20px;
+  font-family: "Jost";
 }
 
 .login-box input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
-  transition: border 0.3s;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(200, 220, 255, 0.3);
   color: white;
+  margin-bottom: 15px;
 }
 
 .login-box input:focus {
-  border-color: #0371ef;
-  outline: none;
+  border-color: #63b3ed;
 }
 
 .login_button {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 12px;
+  background: #2b6cb0;
   border: none;
-  border-radius: 5px;
-  font-size: 15px;
-  cursor: pointer;
-  background: #070c12;
+  border-radius: 8px;
   color: white;
-  transition: background 0.3s, color 0.3s;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .login_button:hover {
-  background: #0b6ded;
-  color: #d5f6f0;
-   font-family: "Jost",
+  background: #3182ce;
 }
 
 .forgot_button {
   width: 100%;
   padding: 10px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 15px;
-  cursor: pointer;
   background: transparent;
-  color: #0371ef;
+  border: none;
+  color: #90cdf4;
   text-decoration: underline;
-  transition: color 0.3s;
+  cursor: pointer;
 }
 
 .forgot_button:hover {
-  color: #0056b3;
+  color: #63b3ed;
 }
 
 .error-message {
   color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
 }
-
 .success-message {
   color: green;
-  font-size: 14px;
-  margin-bottom: 10px;
 }
 
+/* --------------------------------------------------
+   SIGNUP PAGE
+-------------------------------------------------- */
+
 .signup-page {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: url("https://t4.ftcdn.net/jpg/05/71/64/43/360_F_571644338_eMXo8Kr2rec7QEdK574hVkVQozyYPloX.jpg")
+  background: url("https://cdn.create.vista.com/api/media/medium/196749318/stock-photo-stack-different-books-dark-tabletop-black?token=")
     no-repeat center center/cover;
   height: 100vh;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  font-family: Arial, sans-serif;
 }
-
 
 .signup-container {
-  background: transparent;
+  width: 420px;
+  height: 480px;
   padding: 30px;
-  border: none;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-  width: 350px;
+  backdrop-filter: blur(10px);
+  background: rgba(20, 28, 38, 0.55);
+  border-radius: 14px;
+  border: 1px solid rgba(135, 206, 255, 0.3);
+
+  box-shadow: 0 0 25px rgba(90, 160, 220, 0.3);
+  animation: signupGlow 2s infinite alternate;
+  color: #eef2f5;
   text-align: center;
-  color: #f6f3f3;
-  margin-right: 200px;
-  width: 500px;
-  height: 600px;
-  animation: blink 2s infinite ease-in-out;
-  font-size: 18px;
+
+  position: absolute;
+  right: 12%;
+  top: 14%;
 }
-@keyframes blink {
-  0% { box-shadow: 0 0 20px rgba(13, 104, 201, 0.9); }
-  50% { box-shadow: 0 0 40px rgb(50, 181, 242); }
-  100% { box-shadow: 0 0 20px rgba(12, 144, 201, 0.9); }
+
+@keyframes signupGlow {
+  0% { box-shadow: 0 0 18px rgba(100, 160, 220, 0.3); }
+  100% { box-shadow: 0 0 28px rgba(155, 200, 255, 0.5); }
 }
 
 .signup-container h2 {
   margin-bottom: 20px;
-  color: #f5ecec;
+  color: #e6edf5;
   font-size: 26px;
   font-family: "Jost";
- 
- 
 }
 
 .signup-container input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(200, 220, 255, 0.3);
+  color: white;
+  margin-bottom: 12px;
 }
 
 .signup-container button {
   width: 100%;
   padding: 12px;
-  background: #4caf50;
+  background: #38a169;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   color: white;
   font-size: 18px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: 0.3s;
 }
 
 .signup-container button:hover {
-  background: #45a049;
+  background: #2f855a;
 }
-
 
 .signup-container p {
   margin-top: 15px;

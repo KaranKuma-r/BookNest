@@ -1,3 +1,84 @@
-h1{
-    font-size: 50px;
+/* ---------- FORM CONTAINER ---------- */
+
+.add-book-form {
+  width: 520px;              /* Wider */
+  margin: 100px auto;
+  padding: 22px;             /* Smaller height */
+  background: #ffffff;
+  border-radius: 14px;
+
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Inter", sans-serif;
+}
+
+/* ---------- TITLE ---------- */
+.form-title {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #1a1a1a;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* ---------- INPUTS ---------- */
+.form-input,
+.file-input {
+  width: 100%;
+  padding: 10px;               /* Smaller */
+  border-radius: 10px;
+  border: 1px solid #dcdcdc;
+  background: #fafafa;
+  margin-bottom: 12px;
+  font-size: 15px;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-input:focus,
+.file-input:focus {
+  outline: none;
+  border-color: #7a9eff;
+  background: white;
+  box-shadow: 0 0 5px rgba(100, 140, 255, 0.3);
+}
+
+textarea.form-input {
+  height: 80px;               /* Reduced height */
+  resize: none;
+}
+
+/* ---------- FILE LABEL ---------- */
+.file-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* ---------- SUBMIT BUTTON ---------- */
+.submit-btn {
+  width: 100%;
+  padding: 11px;              /* Slightly smaller */
+  background: linear-gradient(135deg, #6d9cff, #5078ff);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(135deg, #5078ff, #3560ff);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(80, 120, 255, 0.35);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 520px) {
+  .add-book-form {
+    width: 92%;
+    padding: 20px;
+  }
 }

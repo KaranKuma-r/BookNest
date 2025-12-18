@@ -10,13 +10,14 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBi6_-ywKIVwNNHtAjuaYrGS5EzRmj4sxU",
-  authDomain: "booknest-748fc.firebaseapp.com",
-  projectId: "booknest-748fc",
-  storageBucket: "booknest-748fc.appspot.com",
-  messagingSenderId: "328477228164",
-  appId: "1:328477228164:web:85c5964e3c3383234d56d1",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

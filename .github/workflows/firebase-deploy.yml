@@ -24,7 +24,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+    
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
       - name: Deploy to Firebase Hosting
-        run: npx firebase deploy --only hosting --project booknest-748fc
+        run: firebase deploy --only hosting --project booknest-748fc
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

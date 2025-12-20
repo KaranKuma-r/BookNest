@@ -12,6 +12,7 @@ export const SignUp = () => {
   const [username, setUsername] = useState("");   
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // ✅ NEW
 
   const navigate = useNavigate();
 
@@ -21,6 +22,8 @@ export const SignUp = () => {
     if (username.trim().length < 3) {
       return alert("Username must be at least 3 characters");
     }
+
+    setLoading(true); // ✅ start loading
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -45,11 +48,13 @@ export const SignUp = () => {
       });
 
       alert("✅ Signup successful! Please verify your email.");
-      navigate("/login");
+      navigate("/login"); // ✅ redirect AFTER success
 
     } catch (err) {
       console.error("Signup Error:", err);
       alert(err.message);
+    } finally {
+      setLoading(false); // ✅ stop loading
     }
   };
 
@@ -59,7 +64,6 @@ export const SignUp = () => {
         <form onSubmit={handleSignup}>
           <h2>Create Account</h2>
 
-          {/* Username */}
           <input
             type="text"
             value={username}
@@ -68,7 +72,6 @@ export const SignUp = () => {
             required
           />
 
-          {/* Email */}
           <input
             type="email"
             value={email}
@@ -77,7 +80,6 @@ export const SignUp = () => {
             required
           />
 
-          {/* Password */}
           <input
             type="password"
             value={password}
@@ -86,7 +88,10 @@ export const SignUp = () => {
             required
           />
 
-          <button type="submit">Sign Up</button>
+          {/* ✅ BUTTON WITH LOADING */}
+          <button type="submit" disabled={loading}>
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
 
           <p>
             Already have an account?

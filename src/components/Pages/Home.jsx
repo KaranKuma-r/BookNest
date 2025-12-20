@@ -28,6 +28,10 @@ const HomeBooks = () => {
   }, []);
 
   if (loading) return <p>Loading books...</p>;
+  if (!loading && books.length === 0) {
+  return <p>No books available yet 📭</p>;
+}
+
 
   return (
     <div className="home-books">

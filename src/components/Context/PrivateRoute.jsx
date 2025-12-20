@@ -1,17 +1,8 @@
-// src/routes/PrivateRoute.jsx
-
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./AuthContext";
-
+import { auth } from "../../Firebase";
 
 const PrivateRoute = ({ children }) => {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-
-  return children;
+  return auth.currentUser ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

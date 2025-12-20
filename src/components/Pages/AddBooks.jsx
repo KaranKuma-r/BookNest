@@ -7,7 +7,6 @@ function AddBook() {
   const [author, setAuthor] = useState("");
   const [category, setCategory] = useState("");
 
-  // New fields
   const [description, setDescription] = useState("");
   const [language, setLanguage] = useState("");
   const [publishedYear, setPublishedYear] = useState("");
@@ -16,10 +15,13 @@ function AddBook() {
 
   const [cover, setCover] = useState(null);
   const [pdf, setPdf] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const handleUpload = async (file, folder) => {
     try {
-      const resourceType = file.type === "application/pdf" ? "raw" : "image";
+      const resourceType =
+        file.type === "application/pdf" ? "raw" : "image";
+
       const url = `https://api.cloudinary.com/v1_1/drmuxsv2y/${resourceType}/upload`;
 
       const formData = new FormData();
@@ -27,12 +29,14 @@ function AddBook() {
       formData.append("upload_preset", "booknest_preset");
       formData.append("folder", folder);
 
-      const res = await fetch(url, { method: "POST", body: formData });
+      const res = await fetch(url, {
+        method: "POST",
+        body: formData,
+      });
+
       const data = await res.json();
-
-      console.log("Cloudinary response:", data);
-
       if (!data.secure_url) throw new Error("Upload failed");
+
       return data;
     } catch (err) {
       console.error("Upload failed:", err);
@@ -42,24 +46,57 @@ function AddBook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!cover || !pdf) return alert("Please upload both cover and PDF");
+
+    // 🔐 Auth guard (NO UI CHANGE)
+    if (!auth.currentUser) {
+      alert("Please login first");
+      return;
+    }
+
+    if (!cover || !pdf) {
+      alert("Please upload both cover and PDF");
+      return;
+    }
+
+    // 📦 File size limits (production safety)
+    if (cover.size > 3 * 1024 * 1024) {
+      alert("Cover image must be under 3MB");
+      return;
+    }
+
+    if (pdf.size > 10 * 1024 * 1024) {
+      alert("PDF must be under 10MB");
+      return;
+    }
+
+    if (submitting) return;
+    setSubmitting(true);
 
     try {
       const coverRes = await handleUpload(cover, "booknest/covers");
-      if (!coverRes?.secure_url) return alert("❌ Cover upload failed.");
+      if (!coverRes) {
+        alert("❌ Cover upload failed");
+        return;
+      }
 
       const pdfRes = await handleUpload(pdf, "booknest/pdfs");
-      if (!pdfRes?.secure_url) return alert("❌ PDF upload failed.");
+      if (!pdfRes) {
+        alert("❌ PDF upload failed");
+        return;
+      }
 
       await addDoc(collection(db, "books"), {
-        title,
-        author,
-        category,
-        description,
-        language,
-        publishedYear,
-        pages,
-        tags: tags.split(",").map((t) => t.trim()),
+        title: title.trim(),
+        author: author.trim(),
+        category: category.trim(),
+        description: description.trim(),
+        language: language.trim(),
+        publishedYear: Number(publishedYear),
+        pages: Number(pages),
+        tags: tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
 
         ownerId: auth.currentUser.uid,
 
@@ -70,14 +107,13 @@ function AddBook() {
         pdfPublicId: pdfRes.public_id,
 
         createdAt: serverTimestamp(),
-
         averageRating: 0,
         totalRatings: 0,
       });
 
       alert("✅ Book added successfully!");
 
-      // Reset all input fields
+      // Reset inputs (UI SAME)
       setTitle("");
       setAuthor("");
       setCategory("");
@@ -88,10 +124,11 @@ function AddBook() {
       setTags("");
       setCover(null);
       setPdf(null);
-
     } catch (err) {
-      console.error(err);
+      console.error("Add book error:", err);
       alert("⚠️ Error adding book");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -184,7 +221,9 @@ function AddBook() {
         className="file-input"
       />
 
-      <button type="submit" className="submit-btn">Add Book</button>
+      <button type="submit" className="submit-btn" disabled={submitting}>
+        {submitting ? "Adding..." : "Add Book"}
+      </button>
     </form>
   );
 }

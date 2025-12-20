@@ -1,13 +1,7 @@
-// Import the functions you need from the SDKs you need
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { initializeFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -18,12 +12,18 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-
-// Initialize Firebase
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
+
+// ✅ CORRECT WAY (THIS FIXES EVERYTHING)
+export const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true,
+});
+
+// Auth & Storage
 export const auth = getAuth(app);
-export const db = getFirestore(app);
 export const storage = getStorage(app);
-console.log("Firebase App Initialized:" ,db);
+
+console.log("Firebase initialized correctly");
 
 export default app;

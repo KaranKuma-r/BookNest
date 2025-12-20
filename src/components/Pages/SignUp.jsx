@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  updateProfile
+  updateProfile,
+  signOut
 } from "firebase/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { auth, db } from "../../Firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 
 export const SignUp = () => {
-  const [username, setUsername] = useState("");   
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false); // ✅ NEW
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,9 +24,10 @@ export const SignUp = () => {
       return alert("Username must be at least 3 characters");
     }
 
-    setLoading(true); // ✅ start loading
+    setLoading(true);
 
     try {
+      // 1️⃣ Create user
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -34,27 +36,40 @@ export const SignUp = () => {
 
       const user = userCredential.user;
 
+      // 2️⃣ Update profile
       await updateProfile(user, {
         displayName: username,
       });
 
-      await sendEmailVerification(user);
-
+      // 3️⃣ Save user in Firestore
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         username,
         email,
-        createdAt: new Date(),
+        createdAt: serverTimestamp(),
       });
 
-      alert("✅ Signup successful! Please verify your email.");
-      navigate("/login"); // ✅ redirect AFTER success
+      // 4️⃣ Send verification email
+      await sendEmailVerification(user);
+
+      // 5️⃣ IMPORTANT: logout user after signup
+      await signOut(auth);
+
+      alert("✅ Account created! Please verify your email before logging in.");
+
+      // 6️⃣ Redirect to login
+      navigate("/login");
 
     } catch (err) {
       console.error("Signup Error:", err);
-      alert(err.message);
+
+      if (err.code === "auth/email-already-in-use") {
+        alert("❌ Email already registered. Please login.");
+      } else {
+        alert(err.message);
+      }
     } finally {
-      setLoading(false); // ✅ stop loading
+      setLoading(false);
     }
   };
 
@@ -88,7 +103,6 @@ export const SignUp = () => {
             required
           />
 
-          {/* ✅ BUTTON WITH LOADING */}
           <button type="submit" disabled={loading}>
             {loading ? "Signing up..." : "Sign Up"}
           </button>

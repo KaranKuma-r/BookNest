@@ -30,4 +30,4 @@ jobs:
       - name: Deploy to Firebase Hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: firebase deploy --only hosting --project booknest-748fc
+        run: firebase deploy --only hosting --project booknest-748fc --token "$FIREBASE_TOKEN"

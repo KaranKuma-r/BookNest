@@ -54,5 +54,5 @@ It includes:
 
 ### 1️⃣ Clone Repository
 ```bash id="bn1"
-git clone https://github.com/your-username/booknest.git
+git clone https://github.com/KaranKuma-r/BookNest.git
 cd booknest

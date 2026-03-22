@@ -1,5 +1,5 @@
 # 📚 BookNest
-<!-- ===================== HEADER ===================== -->
+<!-- ===================== HEADER ==================== -->
 <div align="center">
   <h1>📚 BookNest</h1>
   <p><b>Full Stack Book Management Platform with Authentication & Cloud Storage</b></p>
